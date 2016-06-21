@@ -21,10 +21,12 @@ def shuffle(request):
     random_list = Note.objects.all().order_by('?')[:1]
     return render(request, 'englishnote/index.html', {'random_list':random_list, 'random':random, 'note_list':note_list})
 
+@login_required
 def detail(request, pk):
     note = Note.objects.get(pk=pk)
     return render(request, 'englishnote/detail.html', {'note': note})
 
+@login_required
 def note_new(request):
     if request.method == 'POST':
         form = NoteForm(request.POST, request.FILES)
@@ -38,6 +40,7 @@ def note_new(request):
         form = NoteForm()
     return render(request, 'englishnote/note_form.html', {'form': form})
 
+@login_required
 def note_edit(request, note_pk):
     note = get_object_or_404(Note, pk=note_pk)
     if request.method == 'POST':
