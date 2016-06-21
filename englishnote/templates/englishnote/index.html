@@ -1,0 +1,57 @@
+{% extends 'englishnote/base.html' %}
+
+{% block content %}
+<div style="margin: auto;">
+    <h2><i> "{{ random.sentence }}" </i></h2>
+</div><br>
+<form action="{% url 'english:note_new' %}" method="post">
+    {% csrf_token %}
+    <div class="input-group col-sm-6">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default">노트 </button>
+        </div>
+        <input id="sentence" class="form-control" type="text" name="sentence">
+    </div>
+    <div class="input-group col-sm-6">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default">설명 </button>
+        </div>
+        <input id="translation" class="form-control" type="text" name="translation">
+        <div class="input-group-btn">
+            <button type="submit" class="btn btn-warning">등록 </button>
+        </div>
+    </div>
+</form><br>
+
+<div class="panel panel-warning col-xs-10" style="padding-right: 0px; padding-left: 0px;">
+  <div class="panel-heading">Note</div>
+    <table class="table">
+        <tr>
+           <th>번호</th>
+           <th>노트</th>
+           <th>설명</th>
+        </tr>
+        {% for note in note_list %}
+        <tr>
+           <td>{{ note.id }}</td>
+           <td>{{ note.sentence|linebreaks }}
+               <a href="{% url 'english:note_delete' note.pk %}" data-confirm="true"><span class="glyphicon glyphicon-remove"></span></a>
+               <a href="{% url 'english:note_edit' note.pk %}" data-confirm="true"><span class="glyphicon glyphicon-pencil"></span></a>
+           </td>
+           <td>{{ note.translation }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div class="col-xs-2">
+    <form action="{% url 'english:random' %}" method="post">
+        {% csrf_token %}
+        <center></center><button type="submit" class="btn btn-default">오늘의 퀴즈</button></center>
+    </form>
+    {% for note in random_list %}
+        <li><a href="{% url 'english:detail' note.pk %}">{{ note.translation }}</a></li>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
