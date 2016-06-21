@@ -34,7 +34,7 @@
         </tr>
         {% for note in note_list %}
         <tr>
-           <td>{{ note.id }}</td>
+           <td>{{ forloop.counter }}</td>
            <td>{{ note.sentence|linebreaks }}
                <a href="{% url 'english:note_delete' note.pk %}" data-confirm="true"><span class="glyphicon glyphicon-remove"></span></a>
                <a href="{% url 'english:note_edit' note.pk %}" data-confirm="true"><span class="glyphicon glyphicon-pencil"></span></a>
